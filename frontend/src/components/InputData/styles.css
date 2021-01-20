@@ -1,0 +1,11 @@
+.container-input{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    margin-bottom: 50px;
+}
+
+.input-field{
+    border-radius: 16px;
+    padding: 10px;
+}
