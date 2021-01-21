@@ -2,6 +2,7 @@
   <div class="home-page">
     <img src="./../../assets/macas-600.jpg" alt="Maçãs" />
     <div class="container-inputs">
+      <p>{{ maxApples }}</p>
       <div class="container-input">
         <label>Vetor de árvores:</label>
         <input class="input-field" v-model="tree_string" type="text" />
@@ -21,19 +22,57 @@
 
 <script>
 import "./styles.css";
+import gql from "graphql-tag";
 
 export default {
   name: "Home",
-  data () {
+  data() {
     return {
       tree_string: "",
       n_marcelo: 0,
       n_carla: 0,
     };
   },
+  apollo: {
+    maxApples: {
+      query: gql`
+        query maxApples($trees: String!, $nMarcelo: Number!, $nCarla: Number!) {
+          maxApples(trees: $trees)
+        }
+      `,
+      variables() {
+        return {
+          trees: this.tree_string,
+          nMarcelo: this.n_marcelo,
+          nCarla: this.n_carla,
+        };
+      },
+      skip() {
+        return true;
+      },
+      result({ data }) {
+        console.log(`Resultado retornado`);
+        alert(data);
+      },
+      error(err) {
+        console.error("Ocorreu algum erro!", err);
+      },
+    },
+  },
   methods: {
-    calcula: function() {
-      console.log(this.tree_string, this.n_marcelo, this.n_carla);
+    calcula: async function () {
+      //console.log(this.$apollo.queries.maxApples.start());
+      await this.$apollo.query({
+        query: gql`
+          query{
+            maxApples(trees: "${this.tree_string}", nMarcelo: ${this.n_marcelo}, nCarla: ${this.n_carla})
+          }
+        `,
+      }).then(data => {
+        console.log(data);
+      }).catch(e => {
+        console.log("Ocorreu algum erro!",e);
+      });
     },
   },
 };
