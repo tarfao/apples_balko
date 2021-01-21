@@ -15,6 +15,28 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS-HEADERS'] = 'Content-Type'
 
+
+def max_apples2(A,K,L):
+    SUBC_K = len(A) - (K-1) #indica quantos subconjuntos de K árvores seguidas posso formar
+    SUBC_L = len(A) - (L-1)
+    MAX_APPLES = -1 #INDICA O NÚMERO MAX DE MAÇÃS COLHIDAS POR AMBOS. INDICAMOS UM NUMERO BAIXO INICIAL
+    INIT_K = -1
+    INIT_L = -1
+    for i in range(0,SUBC_K):
+        for j in range(0,SUBC_L):
+            if (j >= (i+K) or i > (j+L)):
+                accumulator = 0
+                #somando a sequencia de pés de maçã de Marcelo
+                for x in range(i, i+K):
+                    accumulator += A[x]
+                #somando a sequencia de pés de maçã de Carla
+                for x in range(j, j+L):
+                    accumulator += A[x]
+                if MAX_APPLES < accumulator :
+                    INIT_K = i
+                    INIT_L = j
+                    MAX_APPLES = accumulator
+    return [MAX_APPLES, INIT_K, INIT_L]
 '''
 OBJETIVO: ENCONTRAR A MELHOR COMBINAÇÃO SEQUENCIAL DE PÉS DE MAÇÃS QUE POSSUI A MAIOR SOMA
 PARÂMETROS: 
@@ -88,7 +110,8 @@ def get_max_apples(A,K,L):
     ao total em A, como todos os pés vão ser utilizadas, assumimos que marcelo iniciará
     da árvore 0, até a quantidade dele, e carla ficará com os demais pés de maçã, pois não irá interferir
     no resultado, caso um fique com uma parte e o outro com a outra, o importante é escolher todos os pés.
-    ''' 
+    '''
+    print(len(A) == (K+L)) 
     if(len(A) == (K + L)):
         count = 0
         for n in A:
@@ -112,7 +135,7 @@ class Query(graphene.ObjectType):
     def resolve_max_apples(self, info, trees, n_marcelo, n_carla):
         list_str_tree = trees.split(",") #separo os números enviados por vigula, pois estará no formato "1,2,3,4"
         list_int_tree = list(map(int, list_str_tree)) #transformo a lista de string, em uma lista de int
-        data_apples = get_max_apples(list_int_tree, n_marcelo, n_carla)
+        data_apples = max_apples2(list_int_tree, n_marcelo, n_carla)
         return (data_apples)
 
 '''def main():
