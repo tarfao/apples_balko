@@ -8,8 +8,12 @@ Created on Mon Jan 18 17:31:20 2021
 from flask import Flask, request
 import graphene
 import json
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+
+cors = CORS(app)
+app.config['CORS-HEADERS'] = 'Content-Type'
 
 '''
 OBJETIVO: ENCONTRAR A MELHOR COMBINAÇÃO SEQUENCIAL DE PÉS DE MAÇÃS QUE POSSUI A MAIOR SOMA
@@ -79,6 +83,17 @@ RETORNO: UMA LISTA COM 3 VALORES QUE REPRESENTAM
 def get_max_apples(A,K,L):
     if(len(A) < (K+L)): #COLHEITA INVÁLIDA!
         return [-1, -1, -1]
+    '''
+    caso a soma da quantidade de pés de maçã que marcelo(K) e carla(L) escolheram for igual,
+    ao total em A, como todos os pés vão ser utilizadas, assumimos que marcelo iniciará
+    da árvore 0, até a quantidade dele, e carla ficará com os demais pés de maçã, pois não irá interferir
+    no resultado, caso um fique com uma parte e o outro com a outra, o importante é escolher todos os pés.
+    ''' 
+    if(len(A) == (K + L)):
+        count = 0
+        for n in A:
+            count += n
+        return [count, 0, K]
     if(L >= K):
             [N_APPLES_C,INIT_TREE_C]=max_apples_un(A, L)
             [N_APPLES_M,INIT_TREE_M]=max_apples_un(A, K, INIT_TREE_C, L)
@@ -106,7 +121,8 @@ class Query(graphene.ObjectType):
 
 schema = graphene.Schema(query=Query)
 
-@app.route("/", methods=['POST'])
+@app.route("/graphql", methods=['POST'])
+@cross_origin()
 def apple_harvest():
     data = json.loads(request.data)
     print(data['query']);
