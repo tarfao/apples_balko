@@ -1,15 +1,5 @@
 <template>
-  <Home />
+  <div id="nav">
+      <router-view/>
+  </div>
 </template>
-
-<script>
-import Home from './components/Home'
-import './styles.css'
-
-export default {
-  name: 'App',
-  components: {
-    Home
-  }
-}
-</script>

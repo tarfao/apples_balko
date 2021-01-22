@@ -21,7 +21,7 @@
 
 <script>
 import "./styles.css";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "Home",
@@ -36,13 +36,18 @@ export default {
     async calcula() {
       //console.log(this.$apollo.queries.maxApples.start());
       try {
-        const {data} = await axios.post('http://localhost:5000/graphql',{
+        const { data } = await axios.post("http://localhost:5000/graphql", {
           query: `
             {
               maxApples(trees: "${this.trees}", nMarcelo: ${this.nMarcelo}, nCarla: ${this.nCarla})
             }
-          `
-        })
+          `,
+        });
+        const array_trees = this.trees.split(",").map((n) => parseInt(n));
+        this.$router.push({
+          path: "resultado",
+          params: { array_trees, nMarcelo: this.nMarcelo, nCarla: this.nCarla },
+        });
         console.log(data.maxApples);
       } catch (error) {
         throw new Error(error);
