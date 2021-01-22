@@ -15,8 +15,18 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS-HEADERS'] = 'Content-Type'
 
-
-def max_apples2(A,K,L):
+'''
+OBJETIVO: ENCONTRAR A MELHOR COMBINAÇÃO SEQUENCIAL DE PÉS DE MAÇÃS QUE POSSUI A MAIOR SOMA
+PARÂMETROS: 
+    * A = UM ARRAY QUE INDICA O NUMERO DE MAÇÃS EM CADA ÁRVORE CONSECUTIVA
+    * K = O NUMERO DE ÁRVORES QUE SERÃO COLHIDAS POR MARCELO
+    * L = O NUMERO DE ÁRVORES QUE SERÃO COLHIDAS POR CARLA 
+RETORNO: UMA STRING COM 3 NÚMEROS, SEPARADOS POR VIRUGLAS ONDE:
+        1º - INDICA O NÚMERO MÁXIMO DE MAÇÃS QUE PODEM SER COLHIDAS POR AMBOS
+        2º - O INÍCIO DA COLHEITA DE MARCELO
+        3º - O INÍCIO DA COLHEITA DE CARLA
+'''
+def get_max_apples(A,K,L):
     SUBC_K = len(A) - (K-1) #indica quantos subconjuntos de K árvores seguidas posso formar
     SUBC_L = len(A) - (L-1)
     MAX_APPLES = -1 #INDICA O NÚMERO MAX DE MAÇÃS COLHIDAS POR AMBOS. INDICAMOS UM NUMERO BAIXO INICIAL
@@ -102,7 +112,7 @@ RETORNO: UMA LISTA COM 3 VALORES QUE REPRESENTAM
         2 - O PRIMEIRO PÉ DE MAÇÃ QUE O MARCELO IRÁ COLHER
         3 - O PRIMEIRO PÉ DE MAÇÃ QUE CARLA IRÁ COLHER
 '''
-def get_max_apples(A,K,L):
+def get_max_apples1(A,K,L):
     if(len(A) < (K+L)): #COLHEITA INVÁLIDA!
         return [-1, -1, -1]
     '''
@@ -135,7 +145,7 @@ class Query(graphene.ObjectType):
     def resolve_max_apples(self, info, trees, n_marcelo, n_carla):
         list_str_tree = trees.split(",") #separo os números enviados por vigula, pois estará no formato "1,2,3,4"
         list_int_tree = list(map(int, list_str_tree)) #transformo a lista de string, em uma lista de int
-        data_apples = max_apples2(list_int_tree, n_marcelo, n_carla)
+        data_apples = get_max_apples(list_int_tree, n_marcelo, n_carla)
         return (data_apples)
 
 '''def main():
