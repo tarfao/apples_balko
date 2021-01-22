@@ -2,18 +2,17 @@
   <div class="home-page">
     <img src="./../../assets/macas-600.jpg" alt="Maçãs" />
     <div class="container-inputs">
-      <p>{{ maxApples }}</p>
       <div class="container-input">
         <label>Vetor de árvores:</label>
-        <input class="input-field" v-model="tree_string" type="text" />
+        <input class="input-field" v-model="trees" type="text" />
       </div>
       <div class="container-input">
         <label>Árvores de Marcelo:</label>
-        <input class="input-field" v-model="n_marcelo" type="number" />
+        <input class="input-field" v-model="nMarcelo" type="number" />
       </div>
       <div class="container-input">
         <label>Árvores de Carla:</label>
-        <input class="input-field" v-model="n_carla" type="number" />
+        <input class="input-field" v-model="nCarla" type="number" />
       </div>
       <div v-on:click="calcula" class="button-default">Calcular</div>
     </div>
@@ -22,57 +21,32 @@
 
 <script>
 import "./styles.css";
-import gql from "graphql-tag";
+import axios from 'axios';
 
 export default {
   name: "Home",
   data() {
     return {
-      tree_string: "",
-      n_marcelo: 0,
-      n_carla: 0,
+      trees: "",
+      nMarcelo: 0,
+      nCarla: 0,
     };
   },
-  apollo: {
-    maxApples: {
-      query: gql`
-        query maxApples($trees: String!, $nMarcelo: Number!, $nCarla: Number!) {
-          maxApples(trees: $trees)
-        }
-      `,
-      variables() {
-        return {
-          trees: this.tree_string,
-          nMarcelo: this.n_marcelo,
-          nCarla: this.n_carla,
-        };
-      },
-      skip() {
-        return true;
-      },
-      result({ data }) {
-        console.log(`Resultado retornado`);
-        alert(data);
-      },
-      error(err) {
-        console.error("Ocorreu algum erro!", err);
-      },
-    },
-  },
   methods: {
-    calcula: async function () {
+    async calcula() {
       //console.log(this.$apollo.queries.maxApples.start());
-      await this.$apollo.query({
-        query: gql`
-          query{
-            maxApples(trees: "${this.tree_string}", nMarcelo: ${this.n_marcelo}, nCarla: ${this.n_carla})
-          }
-        `,
-      }).then(data => {
-        console.log(data);
-      }).catch(e => {
-        console.log("Ocorreu algum erro!",e);
-      });
+      try {
+        const {data} = await axios.post('http://localhost:5000/graphql',{
+          query: `
+            {
+              maxApples(trees: "${this.trees}", nMarcelo: ${this.nMarcelo}, nCarla: ${this.nCarla})
+            }
+          `
+        })
+        console.log(data.maxApples);
+      } catch (error) {
+        throw new Error(error);
+      }
     },
   },
 };
