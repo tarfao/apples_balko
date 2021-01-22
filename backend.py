@@ -8,9 +8,45 @@ Created on Mon Jan 18 17:31:20 2021
 from flask import Flask, request
 import graphene
 import json
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 
+cors = CORS(app)
+app.config['CORS-HEADERS'] = 'Content-Type'
+
+'''
+OBJETIVO: ENCONTRAR A MELHOR COMBINAÇÃO SEQUENCIAL DE PÉS DE MAÇÃS QUE POSSUI A MAIOR SOMA
+PARÂMETROS: 
+    * A = UM ARRAY QUE INDICA O NUMERO DE MAÇÃS EM CADA ÁRVORE CONSECUTIVA
+    * K = O NUMERO DE ÁRVORES QUE SERÃO COLHIDAS POR MARCELO
+    * L = O NUMERO DE ÁRVORES QUE SERÃO COLHIDAS POR CARLA 
+RETORNO: UMA STRING COM 3 NÚMEROS, SEPARADOS POR VIRUGLAS ONDE:
+        1º - INDICA O NÚMERO MÁXIMO DE MAÇÃS QUE PODEM SER COLHIDAS POR AMBOS
+        2º - O INÍCIO DA COLHEITA DE MARCELO
+        3º - O INÍCIO DA COLHEITA DE CARLA
+'''
+def get_max_apples(A,K,L):
+    SUBC_K = len(A) - (K-1) #indica quantos subconjuntos de K árvores seguidas posso formar
+    SUBC_L = len(A) - (L-1)
+    MAX_APPLES = -1 #INDICA O NÚMERO MAX DE MAÇÃS COLHIDAS POR AMBOS. INDICAMOS UM NUMERO BAIXO INICIAL
+    INIT_K = -1
+    INIT_L = -1
+    for i in range(0,SUBC_K):
+        for j in range(0,SUBC_L):
+            if (j >= (i+K) or i > (j+L)):
+                accumulator = 0
+                #somando a sequencia de pés de maçã de Marcelo
+                for x in range(i, i+K):
+                    accumulator += A[x]
+                #somando a sequencia de pés de maçã de Carla
+                for x in range(j, j+L):
+                    accumulator += A[x]
+                if MAX_APPLES < accumulator :
+                    INIT_K = i
+                    INIT_L = j
+                    MAX_APPLES = accumulator
+    return "{},{},{}".format(MAX_APPLES, INIT_K, INIT_L)
 '''
 OBJETIVO: ENCONTRAR A MELHOR COMBINAÇÃO SEQUENCIAL DE PÉS DE MAÇÃS QUE POSSUI A MAIOR SOMA
 PARÂMETROS: 
@@ -76,9 +112,21 @@ RETORNO: UMA LISTA COM 3 VALORES QUE REPRESENTAM
         2 - O PRIMEIRO PÉ DE MAÇÃ QUE O MARCELO IRÁ COLHER
         3 - O PRIMEIRO PÉ DE MAÇÃ QUE CARLA IRÁ COLHER
 '''
-def get_max_apples(A,K,L):
+def get_max_apples1(A,K,L):
     if(len(A) < (K+L)): #COLHEITA INVÁLIDA!
         return [-1, -1, -1]
+    '''
+    caso a soma da quantidade de pés de maçã que marcelo(K) e carla(L) escolheram for igual,
+    ao total em A, como todos os pés vão ser utilizadas, assumimos que marcelo iniciará
+    da árvore 0, até a quantidade dele, e carla ficará com os demais pés de maçã, pois não irá interferir
+    no resultado, caso um fique com uma parte e o outro com a outra, o importante é escolher todos os pés.
+    '''
+    print(len(A) == (K+L)) 
+    if(len(A) == (K + L)):
+        count = 0
+        for n in A:
+            count += n
+        return [count, 0, K]
     if(L >= K):
             [N_APPLES_C,INIT_TREE_C]=max_apples_un(A, L)
             [N_APPLES_M,INIT_TREE_M]=max_apples_un(A, K, INIT_TREE_C, L)
@@ -106,7 +154,8 @@ class Query(graphene.ObjectType):
 
 schema = graphene.Schema(query=Query)
 
-@app.route("/", methods=['POST'])
+@app.route("/graphql", methods=['POST'])
+@cross_origin()
 def apple_harvest():
     data = json.loads(request.data)
     print(data['query']);
