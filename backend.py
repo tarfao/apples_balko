@@ -36,7 +36,7 @@ def max_apples2(A,K,L):
                     INIT_K = i
                     INIT_L = j
                     MAX_APPLES = accumulator
-    return [MAX_APPLES, INIT_K, INIT_L]
+    return "{},{},{}".format(MAX_APPLES, INIT_K, INIT_L)
 '''
 OBJETIVO: ENCONTRAR A MELHOR COMBINAÇÃO SEQUENCIAL DE PÉS DE MAÇÃS QUE POSSUI A MAIOR SOMA
 PARÂMETROS: 
