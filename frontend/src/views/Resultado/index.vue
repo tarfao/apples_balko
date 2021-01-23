@@ -41,13 +41,26 @@ export default {
     for (let i = 0; i < dataY.length; i++) {
       dataAxis.push(`A${i + 1}`);
     }
-    /**calcula os valores de X, de Y e a soma total de maçãs para Marcelo(M) */
-    const dataAxisM = dataAxis.slice(res[1], res[1] + nMarceloInt);
-    const dataYM = dataY.slice(res[1], res[1] + nMarceloInt);
+    /**calcula os valores de X, de Y e a soma total de maçãs para Marcelo(M) 
+     * antes eu havia utilizado o slice, porém em determinados momentos ele demorava para executar, 
+     * e o reduce utilizado para totalizar a quantidade de maçãs, não conseguia dar seguimento, pois o DataYM
+     * não foi preenchido ainda. Dessa forma, utilizando o for, com a inicialização do dataYM como um array,
+     * o reduce passou a funcionar sem erros.
+    */
+    const dataAxisM =[];
+    const dataYM=[];
+    for(let i = res[1]; i < res[1] + nMarceloInt; i++){
+      dataAxisM.push(dataAxis[i]);
+      dataYM.push(dataY[i])
+    }
     const totalM = dataYM.reduce((acc, curr) => acc + curr);
     /**calcula os valores de X, de Y e a soma total de maçãs para Carla(C) */
-    const dataAxisC = dataAxis.slice(res[2], res[2] + nCarlaInt);
-    const dataYC = dataY.slice(res[2], res[2] + nCarlaInt);
+    const dataAxisC =[];
+    const dataYC=[];
+    for(let i = res[2]; i < res[2] + nCarlaInt; i++){
+      dataAxisC.push(dataAxis[i]);
+      dataYC.push(dataY[i])
+    }
     const totalC = dataYC.reduce((acc, curr) => acc + curr);
 
     return {
