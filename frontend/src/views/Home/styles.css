@@ -8,10 +8,13 @@ img{
     height: 100vh;
 }
 
+.title-home{
+    margin-bottom: 50px;
+}
+
 .container-inputs{
     width: 100%;
     display: flex;
-    justify-content: center;
     flex-direction: column;
     align-items: center;
 }
@@ -26,11 +29,4 @@ img{
 .input-field{
     border-radius: 16px;
     padding: 10px;
-}
-
-.button-default{
-    padding: 30px;
-    border-radius: 20px;
-    cursor: pointer;
-    background-color: #cc5141;
 }
