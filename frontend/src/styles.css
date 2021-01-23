@@ -1,11 +1,11 @@
-body{
+body {
     height: 100%;
     margin: 0px;
     background-color: #E5E5E5;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.button-default{
+.button-default {
     padding: 30px;
     border-radius: 20px;
     cursor: pointer;
@@ -13,11 +13,16 @@ body{
     color: black;
 }
 
-.no-style-link{
+.button-default:hover {
+    background-color: #7c3228;
+    transition: .5s;
+}
+
+.no-style-link {
     text-decoration: none;
 }
 
-.error-p{
+.error-p {
     color: red;
     font-size: 10pt;
     margin: 0;
