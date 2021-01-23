@@ -16,3 +16,9 @@ body{
 .no-style-link{
     text-decoration: none;
 }
+
+.error-p{
+    color: red;
+    font-size: 10pt;
+    margin: 0;
+}
