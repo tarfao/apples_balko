@@ -2,6 +2,7 @@
   <div class="home-page">
     <img src="./../../assets/macas-600.jpg" alt="Maçãs" />
     <div class="container-inputs">
+      <h1 class="title-home">Consulte a quantidade máxima de maçãs colhidas!</h1>
       <div class="container-input">
         <label>Vetor de árvores:</label>
         <input class="input-field" v-model="trees" type="text" />
@@ -10,7 +11,9 @@
       <div class="container-input">
         <label>Árvores de Marcelo:</label>
         <input class="input-field" v-model="nMarcelo" type="number" />
-        <p v-if="nMarceloError" class="error-p">O número deve ser maior que 0.</p>
+        <p v-if="nMarceloError" class="error-p">
+          O número deve ser maior que 0.
+        </p>
       </div>
       <div class="container-input">
         <label>Árvores de Carla:</label>
@@ -35,15 +38,15 @@ export default {
       nCarla: 1,
     };
   },
-  computed:{
+  computed: {
     treesError() {
-      return !/(\d(,\d)*)$/.test(this.trees) && this.trees !== ""
+      return !/(\d(,\d)*)$/.test(this.trees) && this.trees !== "";
     },
-    nMarceloError(){
-      return !(this.nMarcelo > 0)
+    nMarceloError() {
+      return !(this.nMarcelo > 0);
     },
-    nCarlaError(){
-      return !(this.nCarla > 0)
+    nCarlaError() {
+      return !(this.nCarla > 0);
     },
   },
   methods: {
