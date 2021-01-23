@@ -12,16 +12,17 @@ const store = createStore({
         return {
             trees: [],
             nMarcelo: 0,
-            nCarla: 0
+            nCarla: 0,
+            res: []
         }
     },
     mutations: {
         changeValues(state, data){
-            const { trees, nMarcelo, nCarla } = data;
-            console.log(trees, nMarcelo, nCarla)
+            const { trees, nMarcelo, nCarla, res } = data;
             state.trees = trees;
             state.nMarcelo = nMarcelo;
             state.nCarla = nCarla;
+            state.res = res;
         }
     }
 })

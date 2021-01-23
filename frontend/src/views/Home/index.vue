@@ -44,16 +44,17 @@ export default {
           `,
         });
         const array_trees = this.trees.split(",").map((n) => parseInt(n));
+        const res = data.maxApples.split(",").map(n => parseInt(n))
         this.$router.push("resultado");
         this.$store.commit(
           "changeValues", 
           { 
             trees: array_trees, 
             nMarcelo: this.nMarcelo, 
-            nCarla: this.nCarla
+            nCarla: this.nCarla,
+            res
           }
         )
-        console.log(data.maxApples);
       } catch (error) {
         throw new Error(error);
       }
