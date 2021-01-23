@@ -43,7 +43,8 @@ export default {
     }
     /**calcula os valores de X, de Y e a soma total de maçãs para Marcelo(M) 
      * antes eu havia utilizado o slice, porém em determinados momentos ele demorava para executar, 
-     * e o reduce utilizado para totalizar a quantidade de maçãs, não conseguia dar seguimento, pois o DataYM
+     * (provavelmente pela maior quantidade de dados que estava testando) e o reduce utilizado para 
+     * totalizar a quantidade de maçãs, não conseguia dar seguimento, pois o DataYM
      * não foi preenchido ainda. Dessa forma, utilizando o for, com a inicialização do dataYM como um array,
      * o reduce passou a funcionar sem erros.
     */
