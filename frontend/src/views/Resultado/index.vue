@@ -32,6 +32,9 @@ export default {
 
     var dataAxis = [];
     var dataY = trees;
+    //garantindo que os dados enviados sejam de fato inteiros para fins de cálculos.
+    const nMarceloInt = parseInt(nMarcelo)
+    const nCarlaInt = parseInt(nCarla)
 
     /**Atribuindo os valores A1, A2, ... An para os dados de X,
      * indicando arvore 1, avore2...*/
@@ -39,12 +42,12 @@ export default {
       dataAxis.push(`A${i + 1}`);
     }
     /**calcula os valores de X, de Y e a soma total de maçãs para Marcelo(M) */
-    const dataAxisM = dataAxis.slice(res[1], res[1] + nMarcelo);
-    const dataYM = dataY.slice(res[1], res[1] + nMarcelo);
+    const dataAxisM = dataAxis.slice(res[1], res[1] + nMarceloInt);
+    const dataYM = dataY.slice(res[1], res[1] + nMarceloInt);
     const totalM = dataYM.reduce((acc, curr) => acc + curr);
     /**calcula os valores de X, de Y e a soma total de maçãs para Carla(C) */
-    const dataAxisC = dataAxis.slice(res[2], res[2] + nCarla);
-    const dataYC = dataY.slice(res[2], res[2] + nCarla);
+    const dataAxisC = dataAxis.slice(res[2], res[2] + nCarlaInt);
+    const dataYC = dataY.slice(res[2], res[2] + nCarlaInt);
     const totalC = dataYC.reduce((acc, curr) => acc + curr);
 
     return {
