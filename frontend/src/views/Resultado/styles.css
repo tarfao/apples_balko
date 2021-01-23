@@ -1,0 +1,24 @@
+.container-resultado{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container-graficos{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.grafico-style{
+    width: 500px;
+    height: 400px;
+    position: relative;
+}
+
+.total-colhido{
+    font-size: 30pt;
+    text-align: center;
+}

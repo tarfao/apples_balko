@@ -57,5 +57,8 @@ export const bars = (dataAxis, data, title, subtext = null, colorBar = "#228B22"
             },
         ],
         color: colorBar,
+        resize: {
+            width: 500
+        }
     }
 }
