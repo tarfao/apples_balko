@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import { createStore } from 'vuex'
 import 'es6-promise/auto' //vuex require promise
+import Echarts from 'vue-echarts'
+
 import './styles.css'
 
 const store = createStore({
@@ -25,6 +27,7 @@ const store = createStore({
 })
 
 createApp(App)
+    .component('v-chart', Echarts)
     .use(router)
     .use(store)
     .mount('#app')
