@@ -27,10 +27,3 @@ img{
     border-radius: 16px;
     padding: 10px;
 }
-
-.button-default{
-    padding: 30px;
-    border-radius: 20px;
-    cursor: pointer;
-    background-color: #cc5141;
-}

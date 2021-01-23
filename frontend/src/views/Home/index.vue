@@ -14,7 +14,12 @@
         <label>Árvores de Carla:</label>
         <input class="input-field" v-model="nCarla" type="number" />
       </div>
-      <div v-on:click="calcula" class="button-default">Calcular</div>
+      <div 
+      v-on:click="calcula" 
+      class="button-default"
+      >
+      Calcular
+      </div>
     </div>
   </div>
 </template>

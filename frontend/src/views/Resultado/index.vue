@@ -1,7 +1,7 @@
 <template>
   <div class="container-resultado">
     <h1>Resultado</h1>
-    <router-link to="/">Voltar</router-link>
+    <router-link class="button-default no-style-link" to="/">Voltar</router-link>
     <div class="container-graficos">
       <v-chart class="grafico-style" :options="appleTrees" />
       <v-chart class="grafico-style" :options="applesM" />
