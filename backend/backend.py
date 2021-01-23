@@ -9,6 +9,7 @@ from flask import Flask, request
 import graphene
 import json
 from flask_cors import CORS, cross_origin
+import re #para utilizar regex
 
 app = Flask(__name__)
 
@@ -143,10 +144,14 @@ class Query(graphene.ObjectType):
     )
     
     def resolve_max_apples(self, info, trees, n_marcelo, n_carla):
-        list_str_tree = trees.split(",") #separo os números enviados por vigula, pois estará no formato "1,2,3,4"
-        list_int_tree = list(map(int, list_str_tree)) #transformo a lista de string, em uma lista de int
-        data_apples = get_max_apples(list_int_tree, n_marcelo, n_carla)
-        return (data_apples)
+        regex_tree = re.compile("(\d(,\d)*)$")
+        if regex_tree.match(trees) and n_carla > 0 and n_marcelo > 0:
+            list_str_tree = trees.split(",") #separo os números enviados por vigula, pois estará no formato "1,2,3,4"
+            list_int_tree = list(map(int, list_str_tree)) #transformo a lista de string, em uma lista de int
+            data_apples = get_max_apples(list_int_tree, n_marcelo, n_carla)
+            return (data_apples)
+        else:
+            return "Ops o atributo *trees* deve ser uma string do tipo: 1,5,3,4 \n os atributos *nMarcelo* e *nCarla* devem ser maior que 0"
 
 '''def main():
     result = schema.execute('{ maxApples(trees: "3,4,1,7,8,5", nMarcelo: 3, nCarla: 2) }' )
