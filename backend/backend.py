@@ -66,10 +66,6 @@ class Query(graphene.ObjectType):
         else:
             return "Ops o atributo *trees* deve ser uma string do tipo: 1,5,3,4 os atributos *nMarcelo* e *nCarla* devem ser maior que 0"
 
-'''def main():
-    result = schema.execute('{ maxApples(trees: "3,4,1,7,8,5", nMarcelo: 3, nCarla: 2) }' )
-    print(result)'''
-
 schema = graphene.Schema(query=Query)
 
 @app.route("/graphql", methods=['POST'])
