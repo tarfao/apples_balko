@@ -12,3 +12,17 @@
 * Flask
 * Graphql
 * VueJS
+
+## Executando a aplicação
+
+### Frontend
+* npm install
+* npm run serve
+
+### Backend(python3.8)
+* pip install -r requirements.txt
+* Setar variável de ambiente:
+* linux ou mac -> export FLASK_APP=backend.py
+* linux ou mac -> flask run
+* windows -> powershell: `$env:FLASK_APP = "backend.py"`    cmd -> `set FLASK_APP=backend.py`
+* qualquer um -> python -m flask run
