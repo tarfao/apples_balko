@@ -58,6 +58,10 @@ export default {
           this.nMarcelo > 0 &&
           this.nCarla > 0
         ) {
+          if(this.trees.split(",").length < parseInt(this.nMarcelo) + parseInt(this.nCarla)){
+            alert("Ops! -1. Não foi possível efetuar o cálculo!")
+            return;
+          }
           const { data } = await axios.post("http://localhost:5000/graphql", {
             query: `
             {
